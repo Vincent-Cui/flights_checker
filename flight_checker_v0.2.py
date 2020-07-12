@@ -97,6 +97,8 @@ def Search(dept,arrv,date,cur,ali):
     date1=str(date)
     date2=str(date.year)[:2]+str(mo)+str(da)
     date3=str(date.year)+str(mo)+str(da)
+    
+    #this part is use to optimize the server, if you run on your local computer, or if you got any problem from these part you can just delete some of them
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument('--headless')
     chrome_options.add_argument('--no-sandbox')
@@ -113,8 +115,9 @@ def Search(dept,arrv,date,cur,ali):
     chrome_options.add_argument('--homedir=/tmp')
     chrome_options.add_argument('--disk-cache-dir=/tmp/cache-dir')
     chrome_options.add_argument('user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36')
-    chrome_options.binary_location = "/usr/bin/chromium-browser"
+    #chrome_options.binary_location = "/usr/bin/chromium-browser"  #if you are using google chrome, not chromium, you dont need this row
 
+    
     driver = webdriver.Chrome(chrome_options=chrome_options)
     url1=url+'flt='+dept+'.'+arrv+'.'+date1+';c:'+cur+';e:1'+';s:0;a:'+ali+';sd:1;t:f;tt:o'
     driver.get(url1)
