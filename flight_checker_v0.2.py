@@ -1,7 +1,7 @@
 '''
 五个一政策下的回国航班查询器
 Flights to Mainland China Checker during COVID-19 situation
-Version:0.1
+Version:0.2
 Author: Vincent Cui
 '''
 
@@ -16,9 +16,14 @@ import pandas as pd
 import functools
 from urllib.request import urlopen
 from selenium import webdriver
+#from selenium.webdriver.chrome.options import Options
 import time
 import datetime
 import random
+import os
+
+
+
 
 def make_clickable(url, text):
     return f'<a target="_blank" href="{url}">{text}</a>'
@@ -92,7 +97,25 @@ def Search(dept,arrv,date,cur,ali):
     date1=str(date)
     date2=str(date.year)[:2]+str(mo)+str(da)
     date3=str(date.year)+str(mo)+str(da)
-    driver = webdriver.Chrome()
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_argument('--headless')
+    chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument('--disable-gpu')
+    chrome_options.add_argument('--window-size=1280x1696')
+    chrome_options.add_argument('--user-data-dir=/tmp/user-data')
+    chrome_options.add_argument('--hide-scrollbars')
+    chrome_options.add_argument('--enable-logging')
+    chrome_options.add_argument('--log-level=0')
+    chrome_options.add_argument('--v=99')
+    chrome_options.add_argument('--single-process')
+    chrome_options.add_argument('--data-path=/tmp/data-path')
+    chrome_options.add_argument('--ignore-certificate-errors')
+    chrome_options.add_argument('--homedir=/tmp')
+    chrome_options.add_argument('--disk-cache-dir=/tmp/cache-dir')
+    chrome_options.add_argument('user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36')
+    chrome_options.binary_location = "/usr/bin/chromium-browser"
+
+    driver = webdriver.Chrome(chrome_options=chrome_options)
     url1=url+'flt='+dept+'.'+arrv+'.'+date1+';c:'+cur+';e:1'+';s:0;a:'+ali+';sd:1;t:f;tt:o'
     driver.get(url1)
     #wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".gws-flights__flex-filler")))
@@ -136,6 +159,8 @@ def Search(dept,arrv,date,cur,ali):
                 link='https://www.lufthansa.com/cn/zh/homepage'
             elif ali=='TK':
                 link='https://www.turkishairlines.com/zh-cn/index.html'
+            elif ali=='CA':
+                link='http://et.airchina.com.cn/InternetBooking/AirLowFareSearchExternal.do?&tripType=OW&searchType=FARE&flexibleSearch=false&directFlightsOnly=false&fareOptions=1.FAR.X&outboundOption.originLocationCode='+dept+'&outboundOption.destinationLocationCode='+arrv+'&outboundOption.departureDay='+str(da)+'&outboundOption.departureMonth='+str(mo)+'&outboundOption.departureYear='+str(date.year)+'&outboundOption.departureTime=NA&guestTypes%5B0%5D.type=ADT&guestTypes%5B0%5D.amount=1&guestTypes%5B1%5D.type=CNN&guestTypes%5B1%5D.amount=0&guestTypes%5B3%5D.type=MWD&guestTypes%5B3%5D.amount=0&guestTypes%5B4%5D.type=PWD&guestTypes%5B4%5D.amount=0&pos=AIRCHINA_CN&lang=zh_CN&guestTypes%5B2%5D.type=INF&guestTypes%5B2%5D.amount=0'
             else:
                 link=url1
             df_record = df_record.append({'日期':date1, '始发机场':dept,'到达机场':arrv,'航空公司':fl, '航班号':num1, '票价':price, '官网购票链接':link}, ignore_index=True)
@@ -314,12 +339,15 @@ else:
     pass
 st.write("""
 谢谢使用五个一航班查询app，请刷新网页（或按F5）开始新的查询。
-部分高需求航班可能会被航空公司锁仓所以不会显示在这里，部分国内航司需要上官网预约登记购票 \n
+部分高需求航班可能会被航空公司锁仓所以不会显示在这里，部分国内航司需要上官网预约登记购票。
+疫情之下并不是所有机场都允许转机，有些国家可能需要核酸证明等文件，具体注意事项可以参照<a href="https://www.uscreditcardguide.com/xinguanyiqingzhixiaruhehuiguo/">这篇文章</a>。
+10月24日是航空公司的换季日，之后的航班信息可能会有变动\n
 很高兴能帮到您抢到机票，如果这个app让您感到舒适，可以考虑点击下方donate按钮奖励我一杯奶茶钱：）
 如果有任何改进建议也可以在我的<a href="https://vincentc.us/">博客页面</a>留言，谢谢！\n
+祝愿大家都能顺利回国，一路平安，笔芯！❤ \n
 Refresh page (or press F5) to start a new search
 Some high-demand tickets may locked up by airlines
-Thank you for using Flight Checker Version: 0.1
+Thank you for using Flight Checker Version: 0.2
 Released on: 11/07/2020
 Source code is available at: https://github.com/Vincent-Cui/flights_checker
 Developer: Vincent Cui
