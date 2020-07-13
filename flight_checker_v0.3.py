@@ -1,7 +1,7 @@
 '''
 五个一政策下的回国航班查询器
 Flights to Mainland China Checker during COVID-19 situation
-Version:0.2
+Version:0.3
 Author: Vincent Cui
 '''
 
@@ -446,7 +446,7 @@ st.write("""
 祝愿大家都能顺利回国，一路平安，笔芯！❤ \n
 Refresh page (or press F5) to start a new search
 Some high-demand tickets may locked up by airlines
-Thank you for using Flight Checker Version: 0.2
+Thank you for using Flight Checker Version: 0.3\n
 Released on: 11/07/2020
 Source code is available at: https://github.com/Vincent-Cui/flights_checker
 Developer: Vincent Cui
