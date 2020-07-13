@@ -221,6 +221,7 @@ def NA(start,end,cur):
             date=date+datetime.timedelta(days=1)
     return df1
 
+#Europe
 @cache_on_button_press('Search') 
 def EU(start,end,cur):
     date=start
@@ -297,29 +298,115 @@ def EU(start,end,cur):
             time.sleep(1)
             date=date+datetime.timedelta(days=1)
     return df1
+
+#Japan-Korea
+def JK(start,end,cur):
+    date=start
+    df1 = pd.DataFrame(columns=['日期','始发机场','到达机场','航空公司' ,'航班号','票价','官网购票链接']) 
+    while date <= end:
+        if date.weekday()==0:
+            df1=df1.append(Search('CJU','PVG',date,cur,'9C'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('ICN','XMN',date,cur,'MF'))
+            date=date+datetime.timedelta(days=1)
+            time.sleep(random.randint(0,10)/10)
+        elif date.weekday()==1:
+            df1=df1.append(Search('KIX','PVG',date,cur,'HO'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('ICN','CGQ',date,cur,'OZ'))
+            time.sleep(random.randint(0,10)/10)
+            date=date+datetime.timedelta(days=1)
+        elif date.weekday()==2:
+            df1=df1.append(Search('ICN','WEH',date,cur,'7C'))
+            time.sleep(random.randint(0,10)/10)
+            date=date+datetime.timedelta(days=1)
+        elif date.weekday()==3:
+            df1=df1.append(Search('NRT','PVG',date,cur,'CA'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('NRT','SHE',date,cur,'CZ'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('NRT','DLC',date,cur,'JL'))
+            time.sleep(random.randint(0,10)/10)
+            date=date+datetime.timedelta(days=1)
+        elif date.weekday()==4:
+            df1=df1.append(Search('ICN','PVG',date,cur,'MU'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('NRT','PVG',date,cur,'MU'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('ICN','PEK',date,cur,'CA'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('ICN','TAO',date,cur,'SC'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('NRT','FOC',date,cur,'MF'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('ICN','SZX',date,cur,'BX'))
+            time.sleep(random.randint(0,10)/10)
+            date=date+datetime.timedelta(days=1)
+        elif date.weekday()==5:
+            df1=df1.append(Search('YYZ','PVG',date,cur,'MU'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('ICN','TAO',date,cur,'QW'))
+            date=date+datetime.timedelta(days=1)
+            time.sleep(random.randint(0,10)/10)
+        else:
+            df1=df1.append(Search('NRT','PVG',date,cur,'9C'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('NRT','PVG',date,cur,'NH'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('ICN','SHE',date,cur,'CZ'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('NRT','HRB',date,cur,'9C'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('ICN','NKG',date,cur,'OZ'))
+            time.sleep(random.randint(0,10)/10)
+            date=date+datetime.timedelta(days=1)
+    return df1
+
 st.title("五个一回国航班查询APP")
 st.write('''请先在左侧选择出发区域，之后设置查询日期区间和票价货币选择，最大
     查询范围为一周，查询间隔为1秒，北美出发一周的航班大概查询时间为2分钟，
     请耐心等待。查询完毕后将会有列表显示有票结果以及官方购票链接''')
-event_list=['北美','欧洲','更多区域正在开发中']
+event_list=['请选择区域','北美','欧洲','日韩','更多区域正在开发中']
 # event_list=['北美','欧洲','澳洲','非洲','日韩','东南亚','中东及非洲','南亚']
 event_type = st.sidebar.selectbox(
 '选择出发区域',
 event_list
 )
 
+#set app width
+st.markdown(
+        f"""
+<style>
+    .reportview-container .main .block-container{{
+        max-width: 1280px;
+        padding-top: 3rem;
+        padding-right: 3rem;
+        padding-left: 3rem;
+        padding-bottom: 3rem;
+    }}
+
+</style>
+""",
+        unsafe_allow_html=True,
+    )
+
 start=st.date_input('起始日期', datetime.date.today())
 end=st.date_input('结束日期', start)
-cur_list=['人民币','美元','欧元']
+cur_list=['人民币','美元','欧元','日元','韩元']
 cur1= st.selectbox(
 '选择货币',
 cur_list
 )
 intv=end-start
+
 if cur1=='人民币':
     cur='CNY'
 elif cur1=='美元':
     cur='USD'
+elif cur1=='日元':
+    cur='JPY'
+elif cur1=='韩元':
+    cur='KRW'
 else:
     cur='EUR'
 if intv.days>6:
@@ -333,6 +420,15 @@ elif event_type =='北美':
         st.write(df, unsafe_allow_html=True)
 elif event_type =='欧洲':
     df_record=EU(start,end,cur)
+    if len(df_record) == 0:
+        st.write("查询日期范围内该地区的机票可能已售罄，建议更改日期范围或前往航空公司官网申请候补")
+    else:
+        df = df_record.to_html(escape=False)
+        st.write(df, unsafe_allow_html=True)
+elif event_type =='日韩':
+    df_record=JK(start,end,cur)
+    df_record.to_csv('E://flight//flight_search_jk.csv',encoding="utf-8")
+    df_record.reset_index(drop=True, inplace=True)
     if len(df_record) == 0:
         st.write("查询日期范围内该地区的机票可能已售罄，建议更改日期范围或前往航空公司官网申请候补")
     else:
