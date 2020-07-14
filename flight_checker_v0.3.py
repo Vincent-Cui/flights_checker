@@ -362,94 +362,97 @@ def JK(start,end,cur):
             date=date+datetime.timedelta(days=1)
     return df1
 
-st.title("五个一回国航班查询APP")
-st.write('''请先在左侧选择出发区域，之后设置查询日期区间和票价货币选择，最大
-    查询范围为一周，查询间隔为1秒，北美出发一周的航班大概查询时间为2分钟，
-    请耐心等待。查询完毕后将会有列表显示有票结果以及官方购票链接''')
-event_list=['请选择区域','北美','欧洲','日韩','更多区域正在开发中']
-# event_list=['北美','欧洲','澳洲','非洲','日韩','东南亚','中东及非洲','南亚']
-event_type = st.sidebar.selectbox(
-'选择出发区域',
-event_list
-)
 
-#set app width
-st.markdown(
-        f"""
-<style>
-    .reportview-container .main .block-container{{
-        max-width: 1280px;
-        padding-top: 3rem;
-        padding-right: 3rem;
-        padding-left: 3rem;
-        padding-bottom: 3rem;
-    }}
+if __name__ == '__main__':
 
-</style>
-""",
-        unsafe_allow_html=True,
+    st.title("五个一回国航班查询APP")
+    st.write('''请先在左侧选择出发区域，之后设置查询日期区间和票价货币选择，最大
+        查询范围为一周，查询间隔为1秒，北美出发一周的航班大概查询时间为2分钟，
+        请耐心等待。查询完毕后将会有列表显示有票结果以及官方购票链接''')
+    event_list=['请选择区域','北美','欧洲','日韩','更多区域正在开发中']
+    # event_list=['北美','欧洲','澳洲','非洲','日韩','东南亚','中东及非洲','南亚']
+    event_type = st.sidebar.selectbox(
+    '选择出发区域',
+    event_list
     )
 
-start=st.date_input('起始日期', datetime.date.today())
-end=st.date_input('结束日期', start)
-cur_list=['人民币','美元','欧元','日元','韩元']
-cur1= st.selectbox(
-'选择货币',
-cur_list
-)
-intv=end-start
+    #set app width
+    st.markdown(
+            f"""
+    <style>
+        .reportview-container .main .block-container{{
+            max-width: 1280px;
+            padding-top: 3rem;
+            padding-right: 3rem;
+            padding-left: 3rem;
+            padding-bottom: 3rem;
+        }}
 
-if cur1=='人民币':
-    cur='CNY'
-elif cur1=='美元':
-    cur='USD'
-elif cur1=='日元':
-    cur='JPY'
-elif cur1=='韩元':
-    cur='KRW'
-else:
-    cur='EUR'
-if intv.days>6:
-    st.write('为了优化性能，间隔请勿超过一周')
-elif event_type =='北美':
-    df_record=NA(start,end,cur)
-    if len(df_record) == 0:
-        st.write("查询日期范围内该地区的机票可能已售罄，建议更改日期范围或前往航空公司官网申请候补")
+    </style>
+    """,
+            unsafe_allow_html=True,
+        )
+
+    start=st.date_input('起始日期', datetime.date.today())
+    end=st.date_input('结束日期', start)
+    cur_list=['人民币','美元','欧元','日元','韩元']
+    cur1= st.selectbox(
+    '选择货币',
+    cur_list
+    )
+    intv=end-start
+
+    if cur1=='人民币':
+        cur='CNY'
+    elif cur1=='美元':
+        cur='USD'
+    elif cur1=='日元':
+        cur='JPY'
+    elif cur1=='韩元':
+        cur='KRW'
     else:
-        df = df_record.to_html(escape=False)
-        st.write(df, unsafe_allow_html=True)
-elif event_type =='欧洲':
-    df_record=EU(start,end,cur)
-    if len(df_record) == 0:
-        st.write("查询日期范围内该地区的机票可能已售罄，建议更改日期范围或前往航空公司官网申请候补")
+        cur='EUR'
+    if intv.days>6:
+        st.write('为了优化性能，间隔请勿超过一周')
+    elif event_type =='北美':
+        df_record=NA(start,end,cur)
+        if len(df_record) == 0:
+            st.write("查询日期范围内该地区的机票可能已售罄，建议更改日期范围或前往航空公司官网申请候补")
+        else:
+            df = df_record.to_html(escape=False)
+            st.write(df, unsafe_allow_html=True)
+    elif event_type =='欧洲':
+        df_record=EU(start,end,cur)
+        if len(df_record) == 0:
+            st.write("查询日期范围内该地区的机票可能已售罄，建议更改日期范围或前往航空公司官网申请候补")
+        else:
+            df = df_record.to_html(escape=False)
+            st.write(df, unsafe_allow_html=True)
+    elif event_type =='日韩':
+        df_record=JK(start,end,cur)
+        df_record.to_csv('E://flight//flight_search_jk.csv',encoding="utf-8")
+        df_record.reset_index(drop=True, inplace=True)
+        if len(df_record) == 0:
+            st.write("查询日期范围内该地区的机票可能已售罄，建议更改日期范围或前往航空公司官网申请候补")
+        else:
+            df = df_record.to_html(escape=False)
+            st.write(df, unsafe_allow_html=True)
     else:
-        df = df_record.to_html(escape=False)
-        st.write(df, unsafe_allow_html=True)
-elif event_type =='日韩':
-    df_record=JK(start,end,cur)
-    df_record.to_csv('E://flight//flight_search_jk.csv',encoding="utf-8")
-    df_record.reset_index(drop=True, inplace=True)
-    if len(df_record) == 0:
-        st.write("查询日期范围内该地区的机票可能已售罄，建议更改日期范围或前往航空公司官网申请候补")
-    else:
-        df = df_record.to_html(escape=False)
-        st.write(df, unsafe_allow_html=True)
-else:
-    pass
-st.write("""
-谢谢使用五个一航班查询app，请刷新网页（或按F5）开始新的查询。
-部分高需求航班可能会被航空公司锁仓所以不会显示在这里，部分国内航司需要上官网预约登记购票。
-疫情之下并不是所有机场都允许转机，有些国家可能需要核酸证明等文件，具体注意事项可以参照<a href="https://www.uscreditcardguide.com/xinguanyiqingzhixiaruhehuiguo/">这篇文章</a>。
-10月24日是航空公司的换季日，之后的航班信息可能会有变动\n
-很高兴能帮到您抢到机票，如果这个app让您感到舒适，可以考虑点击下方donate按钮奖励我一杯奶茶钱：）
-如果有任何改进建议也可以在我的<a href="https://vincentc.us/">博客页面</a>留言，谢谢！\n
-祝愿大家都能顺利回国，一路平安，笔芯！❤ \n
-Refresh page (or press F5) to start a new search
-Some high-demand tickets may locked up by airlines
-Thank you for using Flight Checker Version: 0.3\n
-Released on: 11/07/2020
-Source code is available at: https://github.com/Vincent-Cui/flights_checker
-Developer: Vincent Cui
-if you think it is helpful, you can click the button below to donate me some milk tea money:)
-""",unsafe_allow_html=True)
+        pass
+    st.write("""
+    谢谢使用五个一航班查询app，请刷新网页（或按F5）开始新的查询。
+    部分高需求航班可能会被航空公司锁仓所以不会显示在这里，部分国内航司需要上官网预约登记购票。
+    疫情之下并不是所有机场都允许转机，有些国家可能需要核酸证明等文件，具体注意事项可以参照<a href="https://www.uscreditcardguide.com/xinguanyiqingzhixiaruhehuiguo/">这篇文章</a>。
+    10月24日是航空公司的换季日，之后的航班信息可能会有变动\n
+    很高兴能帮到您抢到机票，如果这个app让您感到舒适，可以考虑点击下方donate按钮奖励我一杯奶茶钱：）
+    如果有任何改进建议也可以在我的<a href="https://vincentc.us/">博客页面</a>留言，谢谢！\n
+    祝愿大家都能顺利回国，一路平安，笔芯！❤ \n
+    Refresh page (or press F5) to start a new search
+    Some high-demand tickets may locked up by airlines
+    Thank you for using Flight Checker Version: 0.3\n
+    Released on: 11/07/2020
+    Source code is available at: https://github.com/Vincent-Cui/flights_checker
+    Developer: Vincent Cui
+    if you think it is helpful, you can click the button below to donate me some milk tea money:)
+    """,unsafe_allow_html=True)
 
