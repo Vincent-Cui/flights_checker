@@ -1,7 +1,7 @@
 # 五个一航班查询APP
 ## Flights to Mainland China Checker during COVID-19 situation
 
-### 更新：刚才得知有不少黄牛使用这个当免费刷票工具，我先关服了，在考虑怎么进行优化来避免这种情况发生，大家可以给点意见！这种工具让黄牛用了只会让大家更难买到票，大家可以收藏这个页面，有新的消息会在这里第一时间通知大家。谢谢理解！
+
 ### 1. 测试地址[点这里](https://app.vincentc.us). Here is the *[Test Page](https://app.vincentc.us)*.
 ### 2. 更新日志/Change Log：
 * 07/13/2020 v0.4: 
