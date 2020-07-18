@@ -19,7 +19,7 @@
 * 07/11/2020 v0.2: 优化爬取速度和界面/Optimize speed and GUI  
 &emsp;&emsp;&emsp;&emsp;&emsp; v0.1: 正式上线，包含欧美航线地区检索/First Online version
 
-**目前仅有北美/日韩/欧洲航线录入了，其他地区航线欢迎大家补充，可以直接提交pull request
+**目前仅有北美/日韩/欧洲航线录入了，其他地区航线欢迎大家补充，可以直接提交pull request**
 
 **很高兴能帮到您抢到机票，如果这个app让您感到舒适，可以考虑奖励我一杯奶茶钱：）谢谢！
-PayPal打赏：wcui12@asu.edu
+PayPal打赏：wcui12@asu.edu**
