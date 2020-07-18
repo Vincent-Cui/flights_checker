@@ -363,7 +363,6 @@ def JK(start,end,cur):
             date=date+datetime.timedelta(days=1)
     return df1
 
-
 def NA1():
     while True:  
         df_na=NA(start,end,cur)
@@ -407,29 +406,18 @@ def JK1():
         file.close()                                    # close file and FTP
         session.quit()
     
-    
-start = datetime.date.today()+ datetime.timedelta(days=1) 
-end= start + datetime.timedelta(days=97) 
-cur='CNY'
-jk_blist=['NH921','NH959']
-thread1 = threading.Thread(target=NA1,name='NAThread')
-thread2 = threading.Thread(target=EU1,name='EU1Thread')
-thread3 = threading.Thread(target=JK1,name='JKThread')
-thread4 = threading.Thread(target=EU2,name='EU2Thread')
 
-thread1.start()
-thread2.start()
-thread3.start()
-thread4.start()
+if __name__ == '__main__':
+    start = datetime.date.today()+ datetime.timedelta(days=1) 
+    end= start + datetime.timedelta(days=97) 
+    cur='CNY'
+    jk_blist=['NH921','NH959']
+    thread1 = threading.Thread(target=NA1,name='NAThread')
+    thread2 = threading.Thread(target=EU1,name='EU1Thread')
+    thread3 = threading.Thread(target=JK1,name='JKThread')
+    thread4 = threading.Thread(target=EU2,name='EU2Thread')
 
-start = datetime.date.today()+ datetime.timedelta(days=14) 
-end= start + datetime.timedelta(days=90) 
-cur='CNY'
-jk_blist=['NH921','NH959']
-thread1 = threading.Thread(target=NA1,name='NAThread')
-thread2 = threading.Thread(target=EU1,name='EUThread')
-thread3 = threading.Thread(target=JK1,name='JKThread')
-
-thread1.start()
-thread2.start()
-thread3.start()
+    thread1.start()
+    thread2.start()
+    thread3.start()
+    thread4.start()
