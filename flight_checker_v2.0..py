@@ -363,35 +363,278 @@ def JK(start,end,cur):
             date=date+datetime.timedelta(days=1)
     return df1
 
+#Aus/Afr/Mid-east/S Asia
+
+def AUAF(start,end,cur):
+    date=start
+    df1 = pd.DataFrame(columns=['日期','始发机场','到达机场','航空公司' ,'航班号','票价','官网购票链接']) 
+    #st.write('查询进度：')
+    #global pgbar
+    #pgbar=st.progress(0)
+    while date <= end:
+        if date.weekday()==0:
+            df1=df1.append(Search('IKA','CAN',date,cur,'W5'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('DAC','KMG',date,cur,'MU'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('AKL','PVG',date,cur,'NZ'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('ADD','PVG',date,cur,'ET'))
+            time.sleep(random.randint(0,10)/10)
+            #st.write(date.strftime('%A')+'完成')
+            date=date+datetime.timedelta(days=1)
+            time.sleep(random.randint(0,10)/10)
+        elif date.weekday()==1:
+            df1=df1.append(Search('DEL','TYN',date,cur,'CA'))
+            time.sleep(random.randint(0,10)/10)
+            date=date+datetime.timedelta(days=1)
+        elif date.weekday()==2:
+            df1=df1.append(Search('IKA','CAN',date,cur,'W5'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('AKL','PVG',date,cur,'MU'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('SYD','PVG',date,cur,'MU'))
+            time.sleep(random.randint(0,10)/10)
+            #st.write(date.strftime('%A')+'完成')
+            date=date+datetime.timedelta(days=1)
+        elif date.weekday()==3:            
+            df1=df1.append(Search('CAI','CAN',date,cur,'MS'))
+            time.sleep(random.randint(0,10)/10)
+            #st.write(date.strftime('%A')+'完成')
+            date=date+datetime.timedelta(days=1)
+            time.sleep(random.randint(0,10)/10)
+        elif date.weekday()==4:
+            df1=df1.append(Search('CAI','PEK',date,cur,'3U'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('DXB','XIY',date,cur,'CA'))
+            #st.write(date.strftime('%A')+'完成')
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('DEL','PVG',date,cur,'MU'))
+            time.sleep(random.randint(0,10)/10)
+            date=date+datetime.timedelta(days=1)
+        elif date.weekday()==5:
+            df1=df1.append(Search('ISB','XIY',date,cur,'CA'))
+            time.sleep(random.randint(0,10)/10)
+            #st.write(date.strftime('%A')+'完成')
+            df1=df1.append(Search('DXB','CAN',date,cur,'EK'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('KTM','CAN',date,cur,'CZ'))
+            time.sleep(random.randint(0,10)/10)
+            date=date+datetime.timedelta(days=1)
+        else:
+            df1=df1.append(Search('AKL','CAN',date,cur,'CZ'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('SYD','CAN',date,cur,'TR'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('SYD','XMN',date,cur,'MF'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('DOH','CAN',date,cur,'QR'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('KTM','CTU',date,cur,'CA'))
+            time.sleep(random.randint(0,10)/10)
+            #st.write(date.strftime('%A')+'完成')
+            date=date+datetime.timedelta(days=1)
+    return df1
+
+#SE Asia Part A
+#@cache_on_button_press('Search') 
+def SEA_a(start,end,cur):
+    date=start
+    df1 = pd.DataFrame(columns=['日期','始发机场','到达机场','航空公司' ,'航班号','票价','官网购票链接']) 
+    #st.write('查询进度：')
+    #global pgbar
+    #pgbar=st.progress(0)
+    while date <= end:
+        if date.weekday() +1 == 1:
+            df1=df1.append(Search('SIN','PVG',date,cur,'SQ'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('KUL','HGH',date,cur,'D7'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('BKK','CAN',date,cur,'AQ'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('PNH','CAN',date,cur,'CZ'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('BKK','XMN',date,cur,'MF'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('SIN','CTU',date,cur,'CA'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('SIN','CKG',date,cur,'MI'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('BKK','CAN',date,cur,'AQ'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('PNH','XIY',date,cur,'QV'))
+            time.sleep(random.randint(0,10)/10)
+            #st.write(date.strftime('%A')+'完成')
+            date=date+datetime.timedelta(days=1)
+            time.sleep(random.randint(0,10)/10)
+        elif date.weekday()+1 == 2:
+            df1=df1.append(Search('BKK','PVG',date,cur,'9C'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('KUL','CAN',date,cur,'CZ'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('BKK','TAO',date,cur,'CA'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('SIN','CAN',date,cur,'CZ'))
+            time.sleep(random.randint(0,10)/10)
+            #st.write(date.strftime('%A')+'完成')
+            date=date+datetime.timedelta(days=1)
+        elif date.weekday()+1 == 3:
+            df1=df1.append(Search('PNH','PVG',date,cur,'MU'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('BKK','CAN',date,cur,'CZ'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('PNH','XMN',date,cur,'MF'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('PNH','CTU',date,cur,'KR'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('PNH','NKG',date,cur,'9C'))
+            #st.write(date.strftime('%A')+'完成')
+            time.sleep(random.randint(0,10)/10)
+            date=date+datetime.timedelta(days=1)
+        elif date.weekday() + 1 == 4:
+            df1=df1.append(Search('SIN','PVG',date,cur,'MU'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('PNH','CGO',date,cur,'CA'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('SIN','NKG',date,cur,'TR'))
+            time.sleep(random.randint(0,10)/10)
+            #st.write(date.strftime('%A')+'完成')
+            date=date+datetime.timedelta(days=1)
+            time.sleep(random.randint(0,10)/10)
+        elif date.weekday() +1 == 5:
+            df1=df1.append(Search('SIN','PVG',date,cur,'HO'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('BKK','PVG',date,cur,'HO'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('PNH','CAN',date,cur,'LQ'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('SIN','XMN',date,cur,'MF'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('BKK','TSN',date,cur,'XJ'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('KUL','XMN',date,cur,'MF'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('BKK','CAN',date,cur,'AQ'))
+            time.sleep(random.randint(0,10)/10)
+            #st.write(date.strftime('%A')+'完成')
+            date=date+datetime.timedelta(days=1)
+        elif date.weekday()+1 == 6:
+            #st.write(date.strftime('%A')+'完成')
+            date=date+datetime.timedelta(days=1)
+        else:
+            df1=df1.append(Search('KUL','PVG',date,cur,'FM'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('SIN','CAN',date,cur,'TR'))
+            time.sleep(random.randint(0,10)/10)
+            date=date+datetime.timedelta(days=1)
+    return df1
+
+#SE Asia part B
+#@cache_on_button_press('Search') 
+def SEA_b(start,end,cur):
+    date=start
+    df1 = pd.DataFrame(columns=['日期','始发机场','到达机场','航空公司' ,'航班号','票价','官网购票链接']) 
+    #st.write('查询进度：')
+    #global pgbar
+    #pgbar=st.progress(0)
+    while date <= end:
+        if date.weekday() +1 == 1:
+            df1=df1.append(Search('MNL','NKG',date,cur,'2P'))
+            time.sleep(random.randint(0,10)/10)
+
+            #st.write(date.strftime('%A')+'完成')
+            date=date+datetime.timedelta(days=1)
+        elif date.weekday()+1 == 2:
+            df1=df1.append(Search('MNL','PVG',date,cur,'MU'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('MNL','TAO',date,cur,'CA'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('VTE','KMG',date,cur,'MU'))
+            time.sleep(random.randint(0,10)/10)
+            #st.write(date.strftime('%A')+'完成')
+            date=date+datetime.timedelta(days=1)
+        elif date.weekday()+1 == 3:
+            df1=df1.append(Search('RGN','KMG',date,cur,'MU'))
+            time.sleep(random.randint(0,10)/10)
+            #st.write(date.strftime('%A')+'完成')
+            time.sleep(random.randint(0,10)/10)
+            date=date+datetime.timedelta(days=1)
+        elif date.weekday() + 1 == 4:
+            df1=df1.append(Search('MNL','CAN',date,cur,'CZ'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('VTE','KMG',date,cur,'QV'))
+            time.sleep(random.randint(0,10)/10)
+            #st.write(date.strftime('%A')+'完成')
+            date=date+datetime.timedelta(days=1)
+            time.sleep(random.randint(0,10)/10)
+        elif date.weekday() +1 == 5:
+            df1=df1.append(Search('VTE','CAN',date,cur,'CZ'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('MNL','XMN',date,cur,'MF'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('VTE','KMG',date,cur,'MU'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('VTE','KMG',date,cur,'MU'))
+            time.sleep(random.randint(0,10)/10)
+            #st.write(date.strftime('%A')+'完成')
+            time.sleep(1)
+            date=date+datetime.timedelta(days=1)
+        elif date.weekday()+1 == 6:
+            df1=df1.append(Search('KOS','KMG',date,cur,'CA'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('RGN','CAN',date,cur,'CZ'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('CEI','CTU',date,cur,'3U'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('KOS','KMG',date,cur,'CA'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('HAN','NKG',date,cur,'VN'))
+            time.sleep(random.randint(0,10)/10)
+            #st.write(date.strftime('%A')+'完成')
+            date=date+datetime.timedelta(days=1)
+            time.sleep(random.randint(0,10)/10)
+        else:
+            df1=df1.append(Search('RGN','CGO',date,cur,'CA'))
+            time.sleep(random.randint(0,10)/10)
+            df1=df1.append(Search('VTE','KMG',date,cur,'QV'))
+            time.sleep(random.randint(0,10)/10)
+            #st.write(date.strftime('%A')+'完成')
+            date=date+datetime.timedelta(days=1)
+    return df1
+
+def AUAF1():
+    while True:  
+        df_auaf=AUAF(start,end,cur)
+        df_auaf.to_csv('E:\\flight\\flight_search_auaf.csv')  #here is the path of output csv
+
+def SEA1():
+    while True:  
+        df_sea1=SEA_a(start,end,cur)
+        df_sea1.to_csv('E:\\flight\\flight_search_sea_a.csv')
+
+        
+def SEA2():
+    while True:  
+        df_sea2=SEA_b(start,end,cur)
+        df_sea2.to_csv('E:\\flight\\flight_search_sea_b.csv')
+
+
 def NA1():
     while True:  
         df_na=NA(start,end,cur)
-        df_na.to_csv('E:\\flight\\flight_search_na.csv')
-        session = ftplib.FTP()
-        file = open('E:\\flight\\flight_search_na.csv','rb')                  # file to send
-        session.storbinary('STOR %s' % '/var/www/app/flight_search_na.csv', file)     # send the file
-        file.close()                                    # close file and FTP
-        session.quit()
+        df_na.to_csv('E:\\flight\\flight_search_na.csv') 
 
 def EU1():
     while True:  
         df_eu1=EU_p1(start,end,cur)
         df_eu1.to_csv('E:\\flight\\flight_search_eu1.csv')
-        session = ftplib.FTP()
-        file = open('E:\\flight\\flight_search_eu1.csv','rb')                  # file to send
-        session.storbinary('STOR %s' % '/var/www/app/flight_search_eu1.csv', file)     # send the file
-        file.close()                                    # close file and FTP
-        session.quit()
-        
+
+
 def EU2():
     while True:  
         df_eu2=EU_p2(start,end,cur)
         df_eu2.to_csv('E:\\flight\\flight_search_eu2.csv')
-        session = ftplib.FTP()
-        file = open('E:\\flight\\flight_search_eu2.csv','rb')                  # file to send
-        session.storbinary('STOR %s' % '/var/www/app/flight_search_eu2.csv', file)     # send the file
-        file.close()                                    # close file and FTP
-        session.quit()
+
         
     
 def JK1():
@@ -400,23 +643,18 @@ def JK1():
         jk_blist=['NH921','NH959']
         df_jk = df_jk[~df_jk['航班号'].isin(jk_blist)] 
         df_jk.to_csv('E:\\flight\\flight_search_jk.csv')
-        session = ftplib.FTP()
-        file = open('E:\\flight\\flight_search_jk.csv','rb')                  # file to send
-        session.storbinary('STOR %s' % '/var/www/app/flight_search_jk.csv', file)     # send the file
-        file.close()                                    # close file and FTP
-        session.quit()
     
 
 if __name__ == '__main__':
-    start = datetime.date.today()+ datetime.timedelta(days=1) 
+    start = datetime.date.today()+ datetime.timedelta(days=1)  #set start and end time
     end= start + datetime.timedelta(days=97) 
     cur='CNY'
-    jk_blist=['NH921','NH959']
+    jk_blist=['NH921','NH959']    #these two flights is not permitted by CAAC but still sell tickets on ANA official website.
     thread1 = threading.Thread(target=NA1,name='NAThread')
     thread2 = threading.Thread(target=EU1,name='EU1Thread')
     thread3 = threading.Thread(target=JK1,name='JKThread')
     thread4 = threading.Thread(target=EU2,name='EU2Thread')
-
+#add other threads here as well
     thread1.start()
     thread2.start()
     thread3.start()
