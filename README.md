@@ -2,8 +2,9 @@
 ## Flights to Mainland China Checker during COVID-19 situation
 
 
-### 1. 测试地址[点这里](https://vincentc.us/flights-to-mainland-china-checker-during-covid-19-situation/). Here is the *[Test Page](https://vincentc.us/flights-to-mainland-china-checker-during-covid-19-situation/)*.
+### 1. 测试地址[点这里](https://flights.vincentc.us). Here is the *[Test Page](https://flights.vincentc.us)*.
 ### 2. 更新日志/Change Log：
+09/12/2020 ：使用vue.js+django重新开发了一遍，比之前的streamlit版本要稳定高效很多。
 <ul><li><strong><span class="has-inline-color has-vivid-red-color">07/22/2020 v3.0：</span></strong></li><li><strong><span class="has-inline-color has-vivid-red-color">加入出国方向（中国大陆-海外）航线搜索功能，方便要出国的小伙伴。感谢<a href="https://github.com/USCreditCardGuide/airlines-to-china-covid-19" target="_blank" aria-label="undefined (opens in a new tab)" rel="noreferrer noopener">USCreditcardguide的航班线路开源项目</a></span></strong></li></ul>
 
 <ul><li><span class="has-inline-color has-vivid-red-color"><strong>07/17/2020 v2.0: 大幅更新搜索列表</strong></span></li></ul>
